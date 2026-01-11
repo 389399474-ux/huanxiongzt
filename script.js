@@ -1,29 +1,94 @@
-// 获取页面元素
-const yesBtn = document.getElementById('yesBtn');
-const noBtn = document.getElementById('noBtn');
-const result = document.getElementById('result');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Microsoft YaHei", sans-serif;
+}
 
-// 点击“当然可以”的逻辑
-yesBtn.addEventListener('click', () => {
-    result.textContent = "🥳 谢谢宝！我要喝珍珠奶茶，少糖少冰～";
-    // 播放轻微的提示音（可选，如需添加可自行找mp3文件）
-});
+body {
+    background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-// 点击“下次吧”的彩蛋逻辑（按钮跑开+调皮文案）
-noBtn.addEventListener('click', () => {
-    // 随机位置偏移
-    const randomX = Math.random() * 100 - 50; // -50到50px
-    const randomY = Math.random() * 100 - 50;
-    noBtn.style.position = 'relative';
-    noBtn.style.left = `${randomX}px`;
-    noBtn.style.top = `${randomY}px`;
-    
-    // 随机文案
-    const texts = [
-        "🥺 再考虑一下嘛～",
-        "不给喝奶茶就不走啦～",
-        "奶茶超甜的，像我一样✨",
-        "求求了～就一杯～"
-    ];
-    result.textContent = texts[Math.floor(Math.random() * texts.length)];
-});
+.container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 40px 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+h1 {
+    color: #e85d75;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.desc {
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.btn-group {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    min-width: 120px;
+}
+
+#yesBtn {
+    background: #e85d75;
+    color: #fff;
+}
+
+/* 当然可以按钮放大动画 */
+@keyframes growBig {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.8); } /* 放大到1.8倍，可调整 */
+}
+
+.yes-grow {
+    animation: growBig 1s forwards;
+    background: #d44860 !important;
+}
+
+#noBtn {
+    background: #eee;
+    color: #666;
+}
+
+/* 下次吧按钮缩小效果 */
+#noBtn:hover, #noBtn.clicked {
+    transform: scale(0.7); /* 缩小到0.7倍，可调整 */
+    background: #ddd !important;
+}
+
+.result {
+    color: #e85d75;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+    height: 30px;
+    line-height: 30px;
+}

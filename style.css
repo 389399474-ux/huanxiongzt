@@ -28,11 +28,9 @@ yesBtn.addEventListener('click', () => {
 noBtn.addEventListener('click', () => {
     // 按钮缩小
     noBtn.classList.add('clicked');
-    // 鼠标离开后恢复大小（仅hover缩小，点击后文案保留）
-    noBtn.addEventListener('mouseleave', () => {
-        noBtn.style.transform = 'scale(1)';
-    });
-
+    // 直接设置transform，不再重复绑定mouseleave！
+    noBtn.style.transform = 'scale(0.7)';
+    
     // 按点击次数展示对应文案
     result.textContent = noTexts[clickCount];
     
@@ -43,9 +41,15 @@ noBtn.addEventListener('click', () => {
     }
 });
 
-// 鼠标离开“下次吧”按钮，恢复初始大小（非点击状态）
+// 只绑定一次mouseleave事件（全局），避免叠加
 noBtn.addEventListener('mouseleave', () => {
-    if (!noBtn.classList.contains('clicked')) {
-        noBtn.style.transform = 'scale(1)';
-    }
+    // 不管是否点击，鼠标离开都恢复原大小
+    noBtn.style.transform = 'scale(1)';
+    // 清除clicked类，避免样式残留
+    noBtn.classList.remove('clicked');
+});
+
+// 可选：鼠标移到“下次吧”按钮时，提前缩小（hover效果）
+noBtn.addEventListener('mouseenter', () => {
+    noBtn.style.transform = 'scale(0.7)';
 });

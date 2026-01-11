@@ -1,87 +1,51 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Microsoft YaHei", sans-serif;
-}
+// 获取页面元素
+const yesBtn = document.getElementById('yesBtn');
+const noBtn = document.getElementById('noBtn');
+const result = document.getElementById('result');
 
-body {
-    background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+// 浣熊主题的“下次吧”文案列表（每次点击切换）
+const noTexts = [
+    "🦝 这么帅不考虑看看？",
+    "🍪 偷走你饼干",
+    "🙅‍♀️ 不行！",
+    "💢 翻垃圾桶了啊",
+    "😤 超没眼光的",
+    "✨ 求求你了好心人"
+];
 
-.container {
-    width: 100%;
-    max-width: 400px;
-    padding: 20px;
-}
+// 初始化点击计数器
+let clickCount = 0;
 
-.card {
-    background: #fff;
-    border-radius: 20px;
-    padding: 40px 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    text-align: center;
-}
+// 点击“当然可以”：放大+浣熊主题感谢文案+禁用按钮
+yesBtn.addEventListener('click', () => {
+    yesBtn.classList.add('yes-grow');
+    result.textContent = "🥳 老板发大财🦝";
+    yesBtn.disabled = true;
+    noBtn.disabled = true;
+});
 
-h1 {
-    color: #e85d75;
-    font-size: 28px;
-    margin-bottom: 20px;
-}
+// 点击“下次吧”：缩小+切换浣熊文案+循环
+noBtn.addEventListener('click', () => {
+    // 按钮缩小
+    noBtn.classList.add('clicked');
+    // 鼠标离开后恢复大小（仅hover缩小，点击后文案保留）
+    noBtn.addEventListener('mouseleave', () => {
+        noBtn.style.transform = 'scale(1)';
+    });
 
-.desc {
-    color: #666;
-    font-size: 16px;
-    margin-bottom: 30px;
-}
+    // 按点击次数展示对应文案
+    result.textContent = noTexts[clickCount];
+    
+    // 计数器+1，超出文案长度则重置（循环）
+    clickCount++;
+    if (clickCount >= noTexts.length) {
+        clickCount = 0;
+    }
+});
 
-.btn-group {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-button {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 30px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-#yesBtn {
-    background: #e85d75;
-    color: #fff;
-}
-
-#yesBtn:hover {
-    background: #d44860;
-    transform: scale(1.05);
-}
-
-#noBtn {
-    background: #eee;
-    color: #666;
-}
-
-/* 点击no时按钮会跑开的小彩蛋 */
-#noBtn:hover {
-    position: relative;
-    left: calc(Math.random() * 20px - 10px);
-    top: calc(Math.random() * 20px - 10px);
-}
-
-.result {
-    color: #e85d75;
-    font-size: 18px;
-    font-weight: bold;
-    margin-top: 20px;
-    height: 30px;
-    line-height: 30px;
-}
+// 鼠标离开“下次吧”按钮，恢复初始大小（非点击状态）
+noBtn.addEventListener('mouseleave', () => {
+    if (!noBtn.classList.contains('clicked')) {
+        noBtn.style.transform = 'scale(1)';
+    }
+});

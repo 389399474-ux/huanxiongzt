@@ -2,15 +2,90 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>领养小浣熊～</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        body {
+            background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+        .container {
+            width: 100%;
+            max-width: 350px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #e85d75;
+            font-size: 24px;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        h1 img {
+            width: 28px;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        .desc {
+            color: #666;
+            font-size: 15px;
+            margin-bottom: 25px;
+        }
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 14px 22px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            min-width: 110px;
+        }
+        #yesBtn {
+            background: #e85d75;
+            color: #fff;
+            transition: transform 1s ease;
+        }
+        #noBtn {
+            background: #eee;
+            color: #666;
+            transition: transform 0.3s ease;
+        }
+        .result {
+            color: #e85d75;
+            font-size: 17px;
+            font-weight: bold;
+            margin-top: 15px;
+            height: 32px;
+            line-height: 32px;
+            word-break: break-all;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <div class="card">
-            <!-- 浣熊图标（透明背景，大小30px） -->
-            <h1><img src="https://img.icons8.com/color/96/000000/raccoon.png" style="width:30px; vertical-align:middle;"> 老板你要领养一只小浣熊吗？</h1>
+            <h1><img src="https://img.icons8.com/color/96/000000/raccoon.png"> 老板你要领养一只小浣熊吗？</h1>
             <p class="desc">非常帅气的那种🦝</p>
             <div class="btn-group">
                 <button id="yesBtn">当然可以 ✨</button>
@@ -19,6 +94,46 @@
             <div id="result" class="result"></div>
         </div>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        // 核心交互逻辑
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const result = document.getElementById('result');
+
+        const noTexts = [
+            "🦝 这么帅不看看？",
+            "🍪 偷走你饼干～",
+            "🙅‍♀️ 不行！",
+            "💢 翻垃圾桶啦",
+            "😤 超没眼光～",
+            "✨ 求求好心人"
+        ];
+
+        let clickCount = 0;
+
+        // 当然可以按钮
+        yesBtn.onclick = function() {
+            this.style.transform = 'scale(1.6)';
+            result.textContent = "🥳 老板发大财🦝";
+            yesBtn.disabled = true;
+            noBtn.disabled = true;
+        };
+
+        // 下次吧按钮
+        noBtn.onclick = function() {
+            this.style.transform = 'scale(0.8)';
+            result.textContent = noTexts[clickCount];
+            clickCount = (clickCount + 1) % noTexts.length;
+        };
+
+        // 触摸/鼠标事件适配
+        noBtn.onmouseleave = noBtn.ontouchend = function() {
+            this.style.transform = 'scale(1)';
+        };
+        noBtn.onmouseenter = noBtn.ontouchstart = function() {
+            this.style.transform = 'scale(0.8)';
+        };
+    </script>
 </body>
 </html>
